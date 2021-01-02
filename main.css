@@ -8,7 +8,7 @@ body {
   font-family: "Heebo", sans-serif;
   background: linear-gradient(137.13deg, #2479fd -21.83%, #00b1ff 84.33%);
   max-width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 button {
@@ -33,7 +33,7 @@ h3 {
   font-size: 20px;
 }
 
-option{
+option {
   background-color: #ebeeff;
 }
 
@@ -75,11 +75,11 @@ option{
   border-radius: 5px 5px;
 }
 
-.cards-container{
+.cards-container {
   flex-direction: column;
 }
 
-.completed-tasks{
+.completed-tasks {
   display: none;
   opacity: 0.6;
   flex-direction: column-reverse;
@@ -161,7 +161,7 @@ option{
   padding: 5px 2px;
 }
 
-.uncompleted-tasks{
+.uncompleted-tasks {
   display: flex;
   flex-direction: column-reverse;
 }
@@ -178,7 +178,7 @@ option{
   transition: all 0.3s ease;
 }
 
-.desc-box p{
+.desc-box p {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -195,4 +195,10 @@ option{
   width: 60%;
   height: 60%;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 650px) {
+  .add-card{
+    flex-direction: column;
+  }
 }
