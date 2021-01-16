@@ -1,0 +1,135 @@
+span {
+  font-size: 15px;
+}
+
+/*login and register area:*/
+.login-container,
+.register-container {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+.login-area,
+.register-area {
+  position: absolute;
+  background-color: #ebeeff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 400px;
+  width: 350px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+}
+
+.close-area {
+  position: absolute;
+  top: 3px;
+  width: fit-content;
+  right: 8%;
+}
+
+.close-area button {
+  width: 200%;
+}
+
+.close-area button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.close-area button img {
+  height: 50%;
+}
+
+.inp-container {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inp-area {
+  position: relative;
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  display: flex;
+  overflow: hidden;
+}
+
+.login-area button, .register-area button{
+    width: 100px;
+    border-radius: 15px;
+    font-size: 16px;
+  }
+
+.login-area button[type="submit"],
+.register-area button[type="submit"] {
+  background-color: #ebeeff;
+  transition: all 0.3s ease-in-out;
+  color: #2479fd;
+  font-weight: 600;
+  border: 2px solid #2479fd;
+}
+
+.login-area button[type="submit"]:hover,
+.register-area button[type="submit"]:hover {
+  background-color: #2479fd;
+  color: #ebeeff;
+}
+
+/*the input animations*/
+.inp-area input {
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #ebeeff;
+  border-bottom: 2px solid black;
+}
+
+.inp-area label {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 150%;
+  pointer-events: none;
+}
+
+.inp-area label::after {
+  content: "";
+  position: absolute;
+  background-color: #2479fd;
+  height: 2px;
+  width: 100%;
+  bottom: 0;
+  z-index: 2;
+  transform: translateX(-100%);
+  transition: all 0.3s ease;
+}
+
+.inp-area label span {
+  position: absolute;
+  bottom: 0;
+  transition: all 0.3s ease;
+}
+
+.inp-area input:focus + label::after {
+  transform: translateX(0);
+}
+
+.inp-area input:focus + label span {
+  color: #2479fd;
+  transform: translateY(-90%);
+  font-size: 12px;
+}
+
+.inp-area input:valid + label span {
+  transform: translateY(-90%);
+  font-size: 12px;
+}

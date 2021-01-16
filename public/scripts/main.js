@@ -66,7 +66,7 @@ const addTask = () => {
     let newCheckBtn = document.createElement("button");
     newCheckBtn.setAttribute("class", "check-btn");
     let checkImg = document.createElement("img");
-    checkImg.setAttribute("src", "./images/check-icon.svg");
+    checkImg.setAttribute("src", "../public/images/check-icon.svg");
     newCheckBtn.appendChild(checkImg);
     newCardBtns.appendChild(newCheckBtn);
 
@@ -74,7 +74,7 @@ const addTask = () => {
     let newTrashBtn = document.createElement("button");
     newTrashBtn.setAttribute("class", "trash-btn");
     let trashImg = document.createElement("img");
-    trashImg.setAttribute("src", "./images/trash-icon.svg");
+    trashImg.setAttribute("src", "../public/images/trash-icon.svg");
     newTrashBtn.appendChild(trashImg);
     newCardBtns.appendChild(newTrashBtn);
 
@@ -88,7 +88,7 @@ const addTask = () => {
       newShowBtn.setAttribute("class", "show-desc-btn");
       newShowBtn.setAttribute("onclick", "showDescFunc(this)");
       let imgShowBtn = document.createElement("img");
-      imgShowBtn.setAttribute("src", "./images/arrow-icon.svg");
+      imgShowBtn.setAttribute("src", "../public/images/arrow-icon.svg");
       newShowBtn.appendChild(imgShowBtn);
       newCardContent.appendChild(newShowBtn);
 
@@ -157,7 +157,7 @@ const addTask = () => {
 
         card[index].style.transform = "translate(100%)";
         card[index].style.opacity = "0";
-        checkBtn[index].remove()
+        checkBtn[index].remove();
       });
     });
   }
@@ -210,3 +210,18 @@ diplaySelec.addEventListener("change", () => {
     uncTasks.style.display = "flex";
   }
 });
+
+//The next code is for display a date in the page
+const day = document.getElementById("day");
+const month = document.getElementById("month");
+const year = document.getElementById("year");
+const weekday = document.getElementById("weekday");
+
+function loadBody() {
+  let today = new Date();
+
+  day.innerHTML = today.getDate();
+  month.innerHTML = today.toLocaleString("default", { month: "long" });
+  year.innerHTML = today.getFullYear();
+  weekday.innerHTML = today.toLocaleDateString("default", { weekday: "long" });
+}
