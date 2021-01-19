@@ -9,10 +9,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../public/css/main.css" />
-    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="../public/css/index.css" />
     <link rel="stylesheet" href="../public/css/auth-popup.css" />
   </head>
-  <body onload="loadBody()">
+  <body>
     <div class="register-container">
       <form class="register-area" id="register-form">
         <div class="close-area">
@@ -30,12 +30,20 @@
             <label for="email"><span>Email</span></label>
           </div>
           <div class="inp-area">
-            <input type="password" name="password" id="password-reg" minlength="6" required />
+            <input
+              type="password"
+              name="password"
+              id="password-reg"
+              minlength="6"
+              required
+            />
             <label for="password"><span>Password</span></label>
           </div>
         </div>
 
         <button type="submit">Register</button>
+
+        <p class="error-message" id="registerError"></p>
       </form>
     </div>
     <div class="login-container">
@@ -55,6 +63,7 @@
               type="password"
               name="password"
               id="password-login"
+              minlength="6"
               required
             />
             <label for="password"><span>Password</span></label>
@@ -62,6 +71,8 @@
         </div>
 
         <button type="submit">Login</button>
+
+        <p class="error-message" id="loginError"></p>
       </form>
     </div>
 
@@ -76,20 +87,9 @@
           </div>
         </div>
 
-        <div class="welcomeSection">
-          <h2>Welcome, <span>Ângelo</span></h2>
-          <div class="date-container">
-            <span id="month">month</span>
-            <span id="day">day</span>
-            <span id="comma">,</span>
-            <span id="year">year</span>
-            <span>-</span>
-            <span id="weekday">weekday</span>
-          </div>
-        </div>
       </section>
       <div class="content">
-        <div class="add-card">
+        <div style="pointer-events: none;" class="add-card">
           <div class="task-area">
             <input type="text" name="title" id="title-inp" maxlength="41" />
             <button class="add-btn">
@@ -119,15 +119,14 @@
       </div>
     </div>
 
-    <script src="../public/scripts/main.js"></script>
-    <script src="../public/scripts/authPopup.js"></script>
-    <script src="../public/scripts/login.js"></script>
+    <script src="./scripts/authPopup.js"></script>
+    <script type="module" src="./scripts/login.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
 
-    <script src="./firebase.js"></script>
+    <script type="module" src="./scripts/firebase.js"></script>
   </body>
 </html>
