@@ -119,7 +119,7 @@ const renderData = (id) => {
     let newCheckBtn = document.createElement("button");
     newCheckBtn.setAttribute("class", "check-btn");
     let checkImg = document.createElement("img");
-    checkImg.setAttribute("src", "../public/images/check-icon.svg");
+    checkImg.setAttribute("src", "./images/check-icon.svg");
     newCheckBtn.appendChild(checkImg);
     newCardBtns.appendChild(newCheckBtn);
 
@@ -177,7 +177,7 @@ const renderData = (id) => {
     let newTrashBtn = document.createElement("button");
     newTrashBtn.setAttribute("class", "trash-btn");
     let trashImg = document.createElement("img");
-    trashImg.setAttribute("src", "../public/images/trash-icon.svg");
+    trashImg.setAttribute("src", "./images/trash-icon.svg");
     newTrashBtn.appendChild(trashImg);
     newCardBtns.appendChild(newTrashBtn);
     console.log(newTrashBtn.parentElement.parentElement)
@@ -237,7 +237,7 @@ const renderData = (id) => {
       newShowBtn.setAttribute("class", "show-desc-btn");
       //newShowBtn.setAttribute("onclick", "showDescFunc(this)");
       let imgShowBtn = document.createElement("img");
-      imgShowBtn.setAttribute("src", "../public/images/arrow-icon.svg");
+      imgShowBtn.setAttribute("src", "./images/arrow-icon.svg");
       newShowBtn.appendChild(imgShowBtn);
       newCardContent.appendChild(newShowBtn);
 
