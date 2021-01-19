@@ -63,6 +63,7 @@ addForm.addEventListener("submit", (e) => {
           id: "_" + id,
           title: todoTitle,
           description: descText,
+          checked: false,
         })
         .then(() => {
           console.log("task added");
@@ -85,17 +86,15 @@ auth.onAuthStateChanged((user) => {
         changes.forEach((change) => {
           if (change.type == "added") {
             renderData(change.doc.id);
-            if(change.doc.data().title == 'angelo task') {
-              change.doc.data().title = 'i changed'
-            }
-          }
-          else if(change.type == 'removed') {
-            let cardForRemove = document.querySelector('[data-id=' + change.doc.id + ']')
+          } else if (change.type == "removed") {
+            let cardForRemove = document.querySelector(
+              "[data-id=" + change.doc.id + "]"
+            );
             cardForRemove.style.transform = "rotate(90deg)";
-                cardForRemove.style.opacity = "0.3";
-                setTimeout(() => {
-                  cardForRemove.remove();
-                }, 150);
+            cardForRemove.style.opacity = "0.3";
+            setTimeout(() => {
+              cardForRemove.remove();
+            }, 150);
           }
         });
       });
@@ -114,13 +113,117 @@ const renderData = (id) => {
   newCardBtns.setAttribute("class", "card-btns");
   newCard.appendChild(newCardContent);
   newCard.appendChild(newCardBtns);
-  uncTasks.appendChild(newCard);
+
+  function renderCheckBtn() {
+    //creating the check button
+    let newCheckBtn = document.createElement("button");
+    newCheckBtn.setAttribute("class", "check-btn");
+    let checkImg = document.createElement("img");
+    checkImg.setAttribute("src", "../public/images/check-icon.svg");
+    newCheckBtn.appendChild(checkImg);
+    newCardBtns.appendChild(newCheckBtn);
+
+    //element and event listener for complete a task
+    const checkBtn = document.querySelectorAll(".card-btns .check-btn");
+
+    checkBtn.forEach((elem, index) => {
+      console.log("hey activated");
+      elem.addEventListener("click", () => {
+        let cardForCheck = elem.parentElement.parentElement;
+        let titleTask = cardForCheck.getElementsByClassName("card-title")[0];
+        let titleSplited = titleTask.innerHTML.split("");
+        let counter = 1;
+        let strokingAnim = setInterval(() => {
+          titleTask.innerHTML =
+            "<s>" +
+            titleSplited.slice(0, counter).join("") +
+            "</s>" +
+            titleSplited.slice(counter, titleSplited.length).join("");
+          counter++;
+          if (counter == titleSplited.length + 1) {
+            clearInterval(strokingAnim);
+            setTimeout(() => {
+              document
+                .querySelector(".completed-tasks")
+                .appendChild(cardForCheck);
+              auth.onAuthStateChanged((user) => {
+                db.collection("users")
+                  .doc(user.uid)
+                  .collection("tasks")
+                  .doc(cardForCheck.getAttribute("data-id"))
+                  .update({ checked: true })
+                  .then(() => {
+                    console.log("task completed");
+                  })
+                  .catch((err) => {
+                    console.log(err.message);
+                  });
+              });
+              cardForCheck.style.transform = "";
+              cardForCheck.style.opacity = "1";
+            }, 300);
+          }
+        }, 20);
+
+        cardForCheck.style.transform = "translate(100%)";
+        cardForCheck.style.opacity = "0";
+        checkBtn[index].remove();
+      });
+    });
+  }
+
+  function renderTrashBtn() {
+    //creating the trash button
+    let newTrashBtn = document.createElement("button");
+    newTrashBtn.setAttribute("class", "trash-btn");
+    let trashImg = document.createElement("img");
+    trashImg.setAttribute("src", "../public/images/trash-icon.svg");
+    newTrashBtn.appendChild(trashImg);
+    newCardBtns.appendChild(newTrashBtn);
+    console.log(newTrashBtn.parentElement.parentElement)
+
+    //element and event listener for remove a task
+    let trashBtn = document.querySelectorAll(".card-btns .trash-btn");
+
+    trashBtn.forEach((elem, index) => {
+      elem.addEventListener("click", () => {
+        let cardId = elem.parentElement.parentElement.getAttribute("data-id");
+        auth.onAuthStateChanged((user) => {
+          db.collection("users")
+            .doc(user.uid)
+            .collection("tasks")
+            .doc(cardId)
+            .delete();
+        });
+      });
+    });
+  }
+
+  //checking if the task is completed and append it to respective divs
+  auth.onAuthStateChanged((user) => {
+    db.collection("users")
+      .doc(user.uid)
+      .collection("tasks")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.data().checked == true) {
+          comTasks.appendChild(newCard);
+          renderTrashBtn();
+        } else {
+          uncTasks.appendChild(newCard);
+          renderCheckBtn()
+          renderTrashBtn();
+        }
+      });
+  });
 
   //creating the p element that is the task's title
   function renderTitleDesc(title, desc) {
     let titleNode = document.createTextNode(title);
     let pTitle = document.createElement("p");
     pTitle.setAttribute("class", "card-title");
+    pTitle.setAttribute("id", "card-title");
     pTitle.appendChild(titleNode);
     newCardContent.appendChild(pTitle);
 
@@ -190,69 +293,6 @@ const renderData = (id) => {
         renderTitleDesc(taskData.title, taskData.description);
       })
   );
-
-  //creating the check button
-  let newCheckBtn = document.createElement("button");
-  newCheckBtn.setAttribute("class", "check-btn");
-  let checkImg = document.createElement("img");
-  checkImg.setAttribute("src", "../public/images/check-icon.svg");
-  newCheckBtn.appendChild(checkImg);
-  newCardBtns.appendChild(newCheckBtn);
-
-  //creating the trash button
-  let newTrashBtn = document.createElement("button");
-  newTrashBtn.setAttribute("class", "trash-btn");
-  let trashImg = document.createElement("img");
-  trashImg.setAttribute("src", "../public/images/trash-icon.svg");
-  newTrashBtn.appendChild(trashImg);
-  newCardBtns.appendChild(newTrashBtn);
-
-  //element and event listener for remove a task
-  let trashBtn = document.querySelectorAll(".card-btns .trash-btn");
-
-  trashBtn.forEach((elem, index) => {
-    elem.addEventListener("click", () => {
-      let cardId = elem.parentElement.parentElement.getAttribute("data-id");
-      auth.onAuthStateChanged((user) => {
-        db.collection("users")
-          .doc(user.uid)
-          .collection("tasks")
-          .doc(cardId)
-          .delete();
-      });
-    });
-  });
-
-  //element and event listener for complete a task
-  const checkBtn = document.querySelectorAll(".card-btns .check-btn");
-
-  checkBtn.forEach((elem, index) => {
-    elem.addEventListener("click", () => {
-      let titleTask = document.querySelectorAll(".card-title")[index];
-      let titleSplited = titleTask.innerHTML.split("");
-      let counter = 1;
-      let strokingAnim = setInterval(() => {
-        titleTask.innerHTML =
-          "<s>" +
-          titleSplited.slice(0, counter).join("") +
-          "</s>" +
-          titleSplited.slice(counter, titleSplited.length).join("");
-        counter++;
-        if (counter == titleSplited.length + 1) {
-          clearInterval(strokingAnim);
-          setTimeout(() => {
-            document.querySelector(".completed-tasks").appendChild(card[index]);
-            card[index].style.transform = "";
-            card[index].style.opacity = "1";
-          }, 300);
-        }
-      }, 20);
-
-      card[index].style.transform = "translate(100%)";
-      card[index].style.opacity = "0";
-      checkBtn[index].remove();
-    });
-  });
 };
 
 //select element configurations
