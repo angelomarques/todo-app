@@ -18,6 +18,11 @@ button {
   height: 50px;
   background-color: #ebeeff;
   outline: none;
+  transition: all 0.15s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.15);
 }
 
 h1,

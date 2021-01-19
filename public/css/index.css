@@ -2,6 +2,17 @@ option {
   background-color: #ebeeff;
 }
 
+.add-btn:hover,
+.save-btn:hover {
+  transform: scale(1);
+  background-color: #2479fd;
+  color: #ebeeff;
+}
+
+.add-btn:hover svg .svg-path {
+  fill: #ebeeff;
+}
+
 .add-card,
 .cards-container {
   width: 60%;
@@ -19,6 +30,8 @@ option {
   cursor: pointer;
   background-color: #ebeeff;
   outline: none;
+  font-weight: 400;
+  font-size: medium;
 }
 
 .card {
@@ -121,15 +134,6 @@ option {
   outline: none;
 }
 
-.task-area .add-btn:hover,
-.desc-container .save-btn:hover,
-.show-desc-btn:hover,
-.task-area .desc-btn:hover,
-.card-btns button:hover,
-.userNone-btns button:hover {
-  background-color: #a2aace;
-}
-
 .task-area .desc-btn {
   font-size: 15px;
   width: 130px;
@@ -170,6 +174,10 @@ option {
   border-radius: 15px;
 }
 
+.show-desc-btn:hover {
+  transform: scale(1);
+}
+
 .show-desc-btn img {
   width: 60%;
   height: 60%;
@@ -185,13 +193,20 @@ option {
   margin-top: 20px;
 }
 
-.userNone h2 {
-  font-size: 20px;
-  color: #ea2115;
+.hero {
   background-color: #ebeeff;
+  width: 90%;
+  margin: auto;
+  border-radius: 15px;
+  padding: 15px 0px;
 }
 
-.userNone-btns {
+.hero h2 {
+  font-size: 20px;
+  color: #ea2115;
+}
+
+.hero-btns {
   display: flex;
   margin-top: 15px;
   justify-content: space-between;
@@ -199,10 +214,22 @@ option {
   margin: 15px auto;
 }
 
-.userNone-btns button {
+.hero-btns button {
   width: 100px;
   border-radius: 15px;
   font-size: 16px;
+  font-weight: 600;
+}
+
+.hero-btns .login {
+  background-color: #2479fd;
+  color: #ebeeff;
+}
+
+.hero-btns .register {
+  background-color: #ebeeff;
+  color: #2479fd;
+  border: 2px solid #2479fd;
 }
 
 .error-message {
@@ -214,7 +241,12 @@ option {
 }
 
 @media (max-width: 650px) {
-  .add-card {
+  .add-card,
+  .cards-container {
     flex-direction: column;
+    width: 90%;
+  }
+  .task-area {
+    width: 100%;
   }
 }

@@ -24,8 +24,9 @@ registerForm.addEventListener("submit", (e) => {
           Password: password,
         })
         .then(() => {
+          alert('you have registered your account')
           console.log("success");
-          location = "login-page.html";
+          location = "index.html";
         })
         .catch((err) => {
           console.log(err.message);
